@@ -1051,6 +1051,96 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ═══ SECURITY SECTION ═══ */
+        .security {
+            padding: 80px 0;
+        }
+
+        .security-box {
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(34, 211, 238, 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 24px;
+            padding: 48px 56px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .security-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #10b981, #22d3ee);
+            border-radius: 4px 0 0 4px;
+        }
+
+        .security-icon {
+            font-size: 4rem;
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 20px;
+        }
+
+        .security-content {
+            flex: 1;
+        }
+
+        .security-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #34d399;
+        }
+
+        .security-content p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .security-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6ee7b7;
+        }
+
+        @media (max-width: 768px) {
+            .security-box {
+                flex-direction: column;
+                text-align: center;
+                padding: 36px 28px;
+                gap: 24px;
+            }
+
+            .security-badges {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 
@@ -1275,6 +1365,27 @@
                         <div class="feature-icon-wrapper">🔐</div>
                         <h3>Đăng nhập Google</h3>
                         <p>Một tài khoản Google là đủ. Bảo mật, nhanh chóng, quản lý vai trò người dùng tự động.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ SECURITY ═══ -->
+        <section class="security">
+            <div class="container">
+                <div class="security-box reveal">
+                    <div class="security-icon">🔒</div>
+                    <div class="security-content">
+                        <h3>API Keys của bạn không bao giờ rời khỏi thiết bị</h3>
+                        <p>Khóa API của bạn (Gemini, Groq, Cerebras, ElevenLabs) được mã hóa bằng <strong>Android
+                                CryptoManager</strong> và lưu trữ hoàn toàn cục bộ. Chúng không được đồng bộ lên đám
+                            mây, không gửi qua server, và chỉ có thể giải mã trên chính thiết bị gốc của bạn.</p>
+                        <div class="security-badges">
+                            <span class="security-badge">✓ Mã hóa AES-256</span>
+                            <span class="security-badge">✓ Lưu cục bộ 100%</span>
+                            <span class="security-badge">✓ Không sync lên cloud</span>
+                            <span class="security-badge">✓ Zero-knowledge</span>
+                        </div>
                     </div>
                 </div>
             </div>
