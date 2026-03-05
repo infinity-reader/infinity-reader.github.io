@@ -4,325 +4,1323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InfinityReader - Ứng dụng đọc truyện tương lai</title>
+    <title>InfinityReader — Ứng dụng đọc truyện AI không giới hạn</title>
+    <meta name="description"
+        content="InfinityReader - Ứng dụng đọc truyện đa nguồn với AI Word Wise, hệ thống Extension mạnh mẽ, đồng bộ Google Drive. Tải miễn phí cho Android.">
+    <meta property="og:title" content="InfinityReader — Đọc truyện không giới hạn">
+    <meta property="og:description" content="Kết hợp AI & Extension để đưa mọi cuốn sách vào túi bạn. Tải miễn phí!">
+    <meta property="og:image" content="infinity_reader_hero.png">
+    <meta property="og:type" content="website">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #6366f1;
-            --primary-glow: rgba(99, 102, 241, 0.5);
+            --primary-light: #818cf8;
+            --primary-glow: rgba(99, 102, 241, 0.4);
             --secondary: #a855f7;
+            --accent: #22d3ee;
             --bg: #030712;
-            --card-bg: rgba(31, 41, 55, 0.4);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --bg-card: rgba(15, 23, 42, 0.6);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(99, 102, 241, 0.4);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --success: #34d399;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        /* Background effects */
-        .blob {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
-            z-index: -1;
-            filter: blur(80px);
-            opacity: 0.6;
+        /* ═══ UTILITY ═══ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
-        .blob-1 {
-            top: -100px;
-            right: -100px;
-        }
-
-        .blob-2 {
-            bottom: 20%;
-            left: -200px;
-        }
-
-        /* Navigation */
-        nav {
-            padding: 2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-            background: rgba(3, 7, 18, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary), var(--accent));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 500;
-            transition: 0.3s;
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            margin-bottom: 12px;
         }
 
-        .nav-links a:hover {
-            color: var(--primary);
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 16px;
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 180px 5% 100px;
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-            min-height: 90vh;
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
         }
 
-        .hero-content {
-            flex: 1;
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
         }
 
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            position: relative;
+        .section-header .section-subtitle {
+            margin: 0 auto;
         }
 
-        .hero-image img {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: float 6s ease-in-out infinite;
+        /* ═══ ANIMATIONS ═══ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        .reveal-delay-4 {
+            transition-delay: 0.4s;
+        }
+
+        .reveal-delay-5 {
+            transition-delay: 0.5s;
         }
 
         @keyframes float {
 
             0%,
             100% {
-                transform: translateY(0);
+                transform: translateY(0) rotate(0deg);
             }
 
             50% {
-                transform: translateY(-20px);
+                transform: translateY(-20px) rotate(1deg);
             }
         }
 
-        h1 {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
         }
 
-        .gradient-text {
-            background: linear-gradient(to right, #818cf8, #c084fc);
+        @keyframes slide-in-right {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ═══ BACKGROUND EFFECTS ═══ */
+        .bg-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-glow-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent 70%);
+            top: -200px;
+            right: -150px;
+            animation: pulse-glow 8s ease-in-out infinite;
+        }
+
+        .bg-glow-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent 70%);
+            bottom: 30%;
+            left: -200px;
+            animation: pulse-glow 10s ease-in-out infinite 2s;
+        }
+
+        .bg-glow-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.15), transparent 70%);
+            top: 60%;
+            right: -100px;
+            animation: pulse-glow 12s ease-in-out infinite 4s;
+        }
+
+        /* Particle canvas */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ═══ NAVIGATION ═══ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 16px 0;
+            background: rgba(3, 7, 18, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: padding 0.3s, background 0.3s;
+        }
+
+        nav.scrolled {
+            padding: 10px 0;
+            background: rgba(3, 7, 18, 0.95);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo::before {
+            content: '📚';
+            -webkit-text-fill-color: initial;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-cta {
+            padding: 10px 24px !important;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            color: white !important;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            font-size: 0.9rem !important;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px var(--primary-glow) !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ═══ HERO ═══ */
+        .hero {
+            padding: 160px 0 100px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero .container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary-light);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse-glow 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 30px -5px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px -5px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 480px;
+            border-radius: 32px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-weight: 500;
         }
 
-        .cta-btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px -5px var(--primary-glow);
+        /* ═══ SCREENSHOTS ═══ */
+        .screenshots {
+            padding: 120px 0;
         }
 
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px -5px var(--primary-glow);
+        .screenshot-carousel {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
         }
 
-        /* Features */
-        .features {
-            padding: 100px 5%;
+        .screenshot-item {
+            flex-shrink: 0;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid var(--border);
         }
 
-        .section-header {
+        .screenshot-item img {
+            width: 280px;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .screenshot-item:nth-child(2) {
+            transform: scale(1.08);
+            z-index: 2;
+            box-shadow: 0 30px 60px -10px var(--primary-glow);
+            border-color: var(--border-hover);
+        }
+
+        .screenshot-item:nth-child(2):hover {
+            transform: scale(1.12) translateY(-10px);
+        }
+
+        /* ═══ HOW IT WORKS ═══ */
+        .how-it-works {
+            padding: 120px 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 16.66%;
+            width: 66.66%;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            opacity: 0.3;
+        }
+
+        .step-card {
             text-align: center;
-            margin-bottom: 4rem;
+            padding: 40px 24px;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 8px 20px var(--primary-glow);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .step-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ═══ FEATURES ═══ */
+        .features {
+            padding: 120px 0;
         }
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
         }
 
         .feature-card {
-            background: var(--card-bg);
-            padding: 3rem 2rem;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-            text-align: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 36px 28px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
         .feature-card:hover {
-            background: rgba(31, 41, 55, 0.6);
-            border-color: var(--primary);
-            transform: translateY(-10px);
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-8px);
         }
 
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: block;
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 16px;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
         .feature-card p {
             color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        /* Floating Badge */
-        .version-badge {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
+        /* ═══ TESTIMONIALS ═══ */
+        .testimonials {
+            padding: 120px 0;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 32px;
         }
 
-        /* Footer */
-        footer {
-            padding: 50px 5%;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        .testimonial-stars {
+            color: #fbbf24;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .testimonial-role {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* ═══ FAQ ═══ */
+        .faq {
+            padding: 120px 0;
+        }
+
+        .faq-list {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.05rem;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            text-align: left;
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-light);
+        }
+
+        .faq-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        .faq-item.open .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s;
+            padding: 0 0;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+            padding: 0 0 24px;
+        }
+
+        .faq-answer p {
             color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
         }
 
-        /* Mobile Responsive */
+        /* ═══ FINAL CTA ═══ */
+        .final-cta {
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .final-cta-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 32px;
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1), transparent 50%);
+            animation: pulse-glow 6s infinite;
+        }
+
+        .final-cta-box h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .final-cta-box p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .final-cta-box .btn-primary {
+            position: relative;
+        }
+
+        /* ═══ FOOTER ═══ */
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copy {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        /* ═══ RESPONSIVE ═══ */
         @media (max-width: 968px) {
-            .hero {
+            .hero .container {
                 flex-direction: column;
                 text-align: center;
-                padding-top: 120px;
             }
 
-            h1 {
-                font-size: 3rem;
+            .hero p {
+                margin: 0 auto 40px;
             }
 
-            .hero-p {
-                margin: 0 auto 2.5rem;
+            .hero-actions {
+                justify-content: center;
             }
 
             .hero-image img {
                 max-width: 300px;
+            }
+
+            .stats-bar {
+                justify-content: center;
+                gap: 32px;
+                flex-wrap: wrap;
+            }
+
+            .stat-item {
+                text-align: center;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-grid::before {
+                display: none;
+            }
+
+            .screenshot-carousel {
+                flex-direction: column;
+            }
+
+            .screenshot-item img {
+                width: 240px;
+            }
+
+            .screenshot-item:nth-child(2) {
+                transform: scale(1);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            /* Mobile menu open */
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(3, 7, 18, 0.97);
+                backdrop-filter: blur(20px);
+                padding: 24px;
+                gap: 20px;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 14px 28px;
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+    <canvas id="particles"></canvas>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
 
-    <nav>
-        <div class="logo">InfinityReader</div>
-        <div class="nav-links">
-            <a href="#features">Tính năng</a>
-            <a href="https://github.com/infinity-reader/infinity-reader/releases">Tải về</a>
+    <!-- ═══ NAVIGATION ═══ -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="logo">InfinityReader</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#features">Tính năng</a>
+                <a href="#how-it-works">Hướng dẫn</a>
+                <a href="#faq">FAQ</a>
+                <a href="https://github.com/infinity-reader/infinity-reader/releases" class="nav-cta">⬇ Tải về</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuBtn" aria-label="Menu">☰</button>
         </div>
     </nav>
 
     <main>
+        <!-- ═══ HERO ═══ -->
         <section class="hero">
-            <div class="hero-content">
-                <span class="version-badge">🚀 Version 1.0.0 is out now!</span>
-                <h1>Trải nghiệm đọc <br><span class="gradient-text">Không giới hạn</span></h1>
-                <p class="hero-p">InfinityReader kết hợp sức mạnh của AI và sự linh hoạt của Extension để đưa mọi cuốn
-                    sách trên thế giới vào túi của bạn.</p>
-                <a href="https://github.com/infinity-reader/infinity-reader/releases" class="cta-btn">Tải APK ngay (Miễn
-                    phí)</a>
-            </div>
-            <div class="hero-image">
-                <img src="infinity_reader_hero.png" alt="InfinityReader Mockup">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge reveal">
+                        <span class="dot"></span>
+                        Version 1.0.0 — Miễn phí
+                    </div>
+                    <h1 class="reveal reveal-delay-1">Trải nghiệm đọc<br><span class="gradient-text">Không giới
+                            hạn</span></h1>
+                    <p class="reveal reveal-delay-2">InfinityReader kết hợp sức mạnh của AI và hệ thống Extension linh
+                        hoạt để đưa mọi cuốn sách trên thế giới vào túi của bạn.</p>
+                    <div class="hero-actions reveal reveal-delay-3">
+                        <a href="https://github.com/infinity-reader/infinity-reader/releases" class="btn-primary">
+                            ⬇ Tải APK miễn phí
+                        </a>
+                        <a href="#features" class="btn-secondary">
+                            Khám phá tính năng →
+                        </a>
+                    </div>
+                    <div class="stats-bar reveal reveal-delay-4">
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="10">0+</div>
+                            <div class="stat-label">Extensions</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="100">0%</div>
+                            <div class="stat-label">Miễn phí</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="5">0⭐</div>
+                            <div class="stat-label">Đánh giá</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image reveal reveal-delay-3">
+                    <img src="infinity_reader_hero.png" alt="InfinityReader App" loading="eager">
+                </div>
             </div>
         </section>
 
-        <section class="features" id="features">
-            <div class="section-header">
-                <h2>Tại sao chọn <span class="gradient-text">InfinityReader</span>?</h2>
+        <!-- ═══ SCREENSHOTS ═══ -->
+        <section class="screenshots" id="screenshots">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Giao diện</span>
+                    <h2 class="section-title">Thiết kế <span class="gradient-text">hiện đại & mượt mà</span></h2>
+                    <p class="section-subtitle">Tối ưu trải nghiệm đọc với giao diện tối, bảo vệ mắt và tiết kiệm pin.
+                    </p>
+                </div>
+                <div class="screenshot-carousel">
+                    <div class="screenshot-item reveal reveal-delay-1">
+                        <img src="screenshot_library.png" alt="Thư viện sách">
+                    </div>
+                    <div class="screenshot-item reveal reveal-delay-2">
+                        <img src="screenshot_reader.png" alt="Trải nghiệm đọc AI">
+                    </div>
+                    <div class="screenshot-item reveal reveal-delay-3">
+                        <img src="screenshot_extensions.png" alt="Kho Extension">
+                    </div>
+                </div>
             </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">🔌</span>
-                    <h3>Kho Extension mở</h3>
-                    <p>Cài đặt script để đọc từ mọi nguồn truyện như NetTruyen, TangThuVien, sstruyen...</p>
+        </section>
+
+        <!-- ═══ HOW IT WORKS ═══ -->
+        <section class="how-it-works" id="how-it-works">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Bắt đầu</span>
+                    <h2 class="section-title">Chỉ <span class="gradient-text">3 bước</span> đơn giản</h2>
+                    <p class="section-subtitle">Từ tải app đến đọc truyện chỉ mất chưa đến 2 phút.</p>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🤖</span>
-                    <h3>AI Word Wise</h3>
-                    <p>Tự động giải nghĩa từ khó ngay trong khi đọc. Công cụ tuyệt vời để học ngoại ngữ qua sách.</p>
+                <div class="steps-grid">
+                    <div class="step-card reveal reveal-delay-1">
+                        <div class="step-number">1</div>
+                        <span class="step-icon">📥</span>
+                        <h3>Tải & Cài đặt</h3>
+                        <p>Tải file APK từ trang Releases và cài đặt trên thiết bị Android.</p>
+                    </div>
+                    <div class="step-card reveal reveal-delay-2">
+                        <div class="step-number">2</div>
+                        <span class="step-icon">🔌</span>
+                        <h3>Cài Extension</h3>
+                        <p>Vào Cài đặt → Extensions, chọn nguồn truyện yêu thích và nhấn Install.</p>
+                    </div>
+                    <div class="step-card reveal reveal-delay-3">
+                        <div class="step-number">3</div>
+                        <span class="step-icon">📖</span>
+                        <h3>Đọc thôi!</h3>
+                        <p>Tìm kiếm, thêm vào thư viện và tận hưởng trải nghiệm đọc không giới hạn.</p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon">☁️</span>
-                    <h3>Đồng bộ Google Drive</h3>
-                    <p>Không bao giờ mất dấu trang. Tất cả sách và tiến trình đều được lưu trên mây cá nhân của bạn.</p>
+            </div>
+        </section>
+
+        <!-- ═══ FEATURES ═══ -->
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Tính năng</span>
+                    <h2 class="section-title">Tại sao chọn <span class="gradient-text">InfinityReader</span>?</h2>
+                    <p class="section-subtitle">Không chỉ là một app đọc truyện — đây là nền tảng đọc sách thông minh.
+                    </p>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon">📱</span>
-                    <h3>Tối ưu E-Ink</h3>
-                    <p>Chế độ chuyên dụng cho máy đọc sách (Kindle, Boox, Onyx) với độ tương phản cao và snap-turn.</p>
+                <div class="feature-grid">
+                    <div class="feature-card reveal reveal-delay-1">
+                        <div class="feature-icon-wrapper">🔌</div>
+                        <h3>Kho Extension mở</h3>
+                        <p>Cài đặt script để đọc từ NetTruyen, TangThuVien, sstruyen và hàng chục nguồn khác. Cộng đồng
+                            có thể tự tạo Extension mới.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-2">
+                        <div class="feature-icon-wrapper">🤖</div>
+                        <h3>AI Word Wise</h3>
+                        <p>Tự động giải nghĩa từ khó ngay khi đọc. Công cụ tuyệt vời để cải thiện vốn từ vựng ngoại ngữ
+                            qua sách EPUB.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-3">
+                        <div class="feature-icon-wrapper">☁️</div>
+                        <h3>Đồng bộ Google Drive</h3>
+                        <p>Không bao giờ mất dấu trang. Sách, tiến trình đọc và từ vựng đều được đồng bộ an toàn trên
+                            đám mây cá nhân.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-1">
+                        <div class="feature-icon-wrapper">📱</div>
+                        <h3>Tối ưu E-Ink</h3>
+                        <p>Chế độ chuyên dụng cho Kindle, Boox, Onyx — nền trắng tinh, chữ đen, lật trang snap không
+                            ghosting.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-2">
+                        <div class="feature-icon-wrapper">🎧</div>
+                        <h3>Text-to-Speech</h3>
+                        <p>Nghe truyện mọi lúc mọi nơi. Hỗ trợ chạy nền, notification media controls và nhiều giọng đọc
+                            tự nhiên.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-3">
+                        <div class="feature-icon-wrapper">💬</div>
+                        <h3>Cộng đồng đọc</h3>
+                        <p>Chat real-time, đăng bài thảo luận, báo lỗi — tất cả trong một tab Community tích hợp sẵn.
+                        </p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🎧</span>
-                    <h3>Nghe truyện (TTS)</h3>
-                    <p>Biến mọi cuốn sách thành audiobook với công nghệ chuyển văn bản thành giọng nói tự nhiên.</p>
+            </div>
+        </section>
+
+        <!-- ═══ TESTIMONIALS ═══ -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Phản hồi</span>
+                    <h2 class="section-title">Người dùng <span class="gradient-text">nói gì?</span></h2>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon">💬</span>
-                    <h3>Cộng đồng đọc</h3>
-                    <p>Giao lưu, thảo luận và cập nhật những bộ truyện hot nhất cùng những người có cùng sở thích.</p>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card reveal reveal-delay-1">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"Hệ thống Extension quá đỉnh! Mình cài một lần rồi đọc được từ mọi
+                            nguồn mà không cần mở nhiều app khác nhau."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">M</div>
+                            <div>
+                                <div class="testimonial-name">Minh Anh</div>
+                                <div class="testimonial-role">Đọc giả</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal reveal-delay-2">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"Word Wise giúp mình học tiếng Anh qua đọc sách hiệu quả hơn rất
+                            nhiều. Vừa đọc vừa tra từ mà không cần chuyển app."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">H</div>
+                            <div>
+                                <div class="testimonial-name">Hoàng Dũng</div>
+                                <div class="testimonial-role">Sinh viên</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal reveal-delay-3">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"E-Ink mode hoạt động cực tốt trên Boox của mình. Lật trang mượt,
+                            không bị ghosting. Nghe TTS khi rửa bát cũng rất tiện!"</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">L</div>
+                            <div>
+                                <div class="testimonial-name">Linh Chi</div>
+                                <div class="testimonial-role">Bookworm</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ FAQ ═══ -->
+        <section class="faq" id="faq">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Thắc mắc</span>
+                    <h2 class="section-title">Câu hỏi <span class="gradient-text">thường gặp</span></h2>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item reveal">
+                        <button class="faq-question">
+                            InfinityReader có miễn phí không?
+                            <span class="faq-arrow">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Hoàn toàn miễn phí! Bạn có thể tải và sử dụng tất cả tính năng mà không mất phí. Dự án
+                                được phát triển với tình yêu dành cho cộng đồng đọc sách Việt Nam.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item reveal reveal-delay-1">
+                        <button class="faq-question">
+                            Extension là gì? Có an toàn không?
+                            <span class="faq-arrow">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Extension là các script nhỏ giúp app kết nối với các trang web đọc truyện. Chúng chạy
+                                trong môi trường sandbox an toàn và chỉ có quyền truy cập dữ liệu truyện, không động đến
+                                dữ liệu cá nhân của bạn.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item reveal reveal-delay-2">
+                        <button class="faq-question">
+                            App có hỗ trợ iOS không?
+                            <span class="faq-arrow">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Hiện tại InfinityReader chỉ hỗ trợ Android (phiên bản 8.0 trở lên). Phiên bản iOS đang
+                                được cân nhắc phát triển trong tương lai.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item reveal reveal-delay-3">
+                        <button class="faq-question">
+                            Làm sao để đồng bộ sách giữa các thiết bị?
+                            <span class="faq-arrow">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Đăng nhập bằng tài khoản Google trong phần Cài đặt → Tài khoản. Sau đó bật Backup để sách
+                                và tiến trình đọc được lưu trên Firebase & Google Drive, có thể khôi phục trên thiết bị
+                                mới.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ FINAL CTA ═══ -->
+        <section class="final-cta">
+            <div class="container">
+                <div class="final-cta-box reveal">
+                    <h2>Sẵn sàng bắt đầu <span class="gradient-text">hành trình đọc</span>?</h2>
+                    <p>Tải InfinityReader ngay và khám phá thế giới truyện không giới hạn.</p>
+                    <a href="https://github.com/infinity-reader/infinity-reader/releases" class="btn-primary">
+                        ⬇ Tải APK ngay — Miễn phí
+                    </a>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- ═══ FOOTER ═══ -->
     <footer>
-        <p>&copy; 2026 InfinityReader Team. Phiên bản được phát triển riêng cho người yêu truyện Việt Nam.</p>
+        <div class="container">
+            <div class="footer-copy">© 2026 InfinityReader. Made with ❤️ for Vietnamese readers.</div>
+            <div class="footer-links">
+                <a href="https://github.com/infinity-reader/infinity-reader">GitHub</a>
+                <a href="https://github.com/infinity-reader/infinity-reader/releases">Releases</a>
+                <a href="#faq">FAQ</a>
+            </div>
+        </div>
     </footer>
+
+    <!-- ═══ SCRIPTS ═══ -->
+    <script>
+        // ── Scroll Reveal (IntersectionObserver) ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ── Navbar scroll effect ──
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ── Mobile menu toggle ──
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            menuBtn.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                menuBtn.textContent = '☰';
+            });
+        });
+
+        // ── Counter animation ──
+        const counters = document.querySelectorAll('.stat-number');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.target);
+                    const suffix = el.textContent.replace(/[\d]/g, '');
+                    let current = 0;
+                    const step = Math.max(1, Math.floor(target / 40));
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        el.textContent = current + suffix;
+                    }, 40);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => counterObserver.observe(c));
+
+        // ── FAQ Accordion ──
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const wasOpen = item.classList.contains('open');
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                // Toggle current
+                if (!wasOpen) item.classList.add('open');
+            });
+        });
+
+        // ── Particles ──
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(139, 92, 246, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
 </body>
 
 </html>
