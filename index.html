@@ -907,6 +907,150 @@
                 font-size: 0.95rem;
             }
         }
+
+        /* ═══ SUPERPOWERS SECTION ═══ */
+        .superpowers {
+            padding: 120px 0;
+        }
+
+        .superpower-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .superpower-card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px 32px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .superpower-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(135deg, transparent, var(--primary), var(--secondary), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .superpower-card:hover::before {
+            opacity: 1;
+        }
+
+        .superpower-card:hover {
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+        }
+
+        .superpower-card .sp-glow {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            top: -40px;
+            right: -40px;
+            transition: opacity 0.5s;
+        }
+
+        .superpower-card:hover .sp-glow {
+            opacity: 0.3;
+        }
+
+        .sp-glow-purple {
+            background: var(--secondary);
+        }
+
+        .sp-glow-blue {
+            background: var(--primary);
+        }
+
+        .sp-glow-cyan {
+            background: var(--accent);
+        }
+
+        .superpower-card .sp-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .sp-badge-purple {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+        }
+
+        .sp-badge-blue {
+            background: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+        }
+
+        .sp-badge-cyan {
+            background: rgba(34, 211, 238, 0.15);
+            color: #22d3ee;
+        }
+
+        .superpower-card .sp-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .superpower-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .superpower-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .sp-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sp-features li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sp-features li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 968px) {
+            .superpower-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
@@ -1028,14 +1172,72 @@
             </div>
         </section>
 
+        <!-- ═══ SUPERPOWERS (VIP FEATURES) ═══ -->
+        <section class="superpowers" id="superpowers">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">⚡ Siêu năng lực</span>
+                    <h2 class="section-title">Những tính năng <span class="gradient-text">không đâu có</span></h2>
+                    <p class="section-subtitle">Ba công cụ biến InfinityReader thành nền tảng học ngoại ngữ qua đọc sách
+                        mạnh nhất.</p>
+                </div>
+                <div class="superpower-grid">
+                    <!-- Word Wise -->
+                    <div class="superpower-card reveal reveal-delay-1">
+                        <div class="sp-glow sp-glow-purple"></div>
+                        <span class="sp-badge sp-badge-purple">Core Feature</span>
+                        <span class="sp-icon">🧠</span>
+                        <h3>AI Word Wise</h3>
+                        <p>Công nghệ AI tự động phân tích và hiển thị nghĩa từ khó <strong>ngay trên dòng chữ</strong>
+                            khi bạn đọc — giống tính năng Word Wise trên Kindle nhưng mạnh hơn gấp bội.</p>
+                        <ul class="sp-features">
+                            <li>Giải nghĩa Anh → Việt, Anh → Anh tự động</li>
+                            <li>Chọn mức độ hiển thị (dễ / trung bình / khó)</li>
+                            <li>Hỗ trợ bởi Gemini AI & từ điển offline</li>
+                            <li>Hoạt động với mọi sách EPUB</li>
+                        </ul>
+                    </div>
+                    <!-- Bilingual Reading -->
+                    <div class="superpower-card reveal reveal-delay-2">
+                        <div class="sp-glow sp-glow-blue"></div>
+                        <span class="sp-badge sp-badge-blue">Unique</span>
+                        <span class="sp-icon">🌐</span>
+                        <h3>Đọc Song Ngữ</h3>
+                        <p>Hiển thị <strong>song song bản gốc và bản dịch</strong> trên cùng một trang. Đọc tiểu thuyết
+                            tiếng Anh với bản dịch Việt bên cạnh — cách học ngôn ngữ tự nhiên nhất.</p>
+                        <ul class="sp-features">
+                            <li>Song ngữ Anh - Việt từng đoạn</li>
+                            <li>Dịch tự động bằng AI</li>
+                            <li>Ẩn/hiện bản dịch linh hoạt</li>
+                            <li>Hỗ trợ nhiều cặp ngôn ngữ</li>
+                        </ul>
+                    </div>
+                    <!-- Vocabulary Builder -->
+                    <div class="superpower-card reveal reveal-delay-3">
+                        <div class="sp-glow sp-glow-cyan"></div>
+                        <span class="sp-badge sp-badge-cyan">Super VIP</span>
+                        <span class="sp-icon">📝</span>
+                        <h3>Vocabulary Builder</h3>
+                        <p>Hệ thống <strong>xây dựng vốn từ vựng</strong> hoàn chỉnh. Mỗi từ bạn nhấn tra sẽ được lưu
+                            lại, phân loại, và giúp bạn ôn tập thông minh theo phương pháp Spaced Repetition.</p>
+                        <ul class="sp-features">
+                            <li>Tự động lưu từ vựng khi tra cứu</li>
+                            <li>Flashcard ôn tập thông minh</li>
+                            <li>Thống kê số từ mới mỗi ngày</li>
+                            <li>Đồng bộ từ vựng lên đám mây</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ═══ FEATURES ═══ -->
         <section class="features" id="features">
             <div class="container">
                 <div class="section-header reveal">
                     <span class="section-label">Tính năng</span>
-                    <h2 class="section-title">Tại sao chọn <span class="gradient-text">InfinityReader</span>?</h2>
-                    <p class="section-subtitle">Không chỉ là một app đọc truyện — đây là nền tảng đọc sách thông minh.
-                    </p>
+                    <h2 class="section-title">Và còn <span class="gradient-text">nhiều hơn thế</span></h2>
+                    <p class="section-subtitle">Hệ sinh thái đọc sách toàn diện cho mọi nhu cầu.</p>
                 </div>
                 <div class="feature-grid">
                     <div class="feature-card reveal reveal-delay-1">
@@ -1045,16 +1247,15 @@
                             có thể tự tạo Extension mới.</p>
                     </div>
                     <div class="feature-card reveal reveal-delay-2">
-                        <div class="feature-icon-wrapper">🤖</div>
-                        <h3>AI Word Wise</h3>
-                        <p>Tự động giải nghĩa từ khó ngay khi đọc. Công cụ tuyệt vời để cải thiện vốn từ vựng ngoại ngữ
-                            qua sách EPUB.</p>
-                    </div>
-                    <div class="feature-card reveal reveal-delay-3">
                         <div class="feature-icon-wrapper">☁️</div>
                         <h3>Đồng bộ Google Drive</h3>
-                        <p>Không bao giờ mất dấu trang. Sách, tiến trình đọc và từ vựng đều được đồng bộ an toàn trên
-                            đám mây cá nhân.</p>
+                        <p>Sách, tiến trình đọc và từ vựng đều được đồng bộ an toàn. Đổi máy mới cũng không mất gì.</p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-3">
+                        <div class="feature-icon-wrapper">🎧</div>
+                        <h3>Text-to-Speech</h3>
+                        <p>Nghe truyện mọi lúc mọi nơi. Hỗ trợ chạy nền, notification media controls và nhiều giọng đọc
+                            tự nhiên.</p>
                     </div>
                     <div class="feature-card reveal reveal-delay-1">
                         <div class="feature-icon-wrapper">📱</div>
@@ -1063,16 +1264,15 @@
                             ghosting.</p>
                     </div>
                     <div class="feature-card reveal reveal-delay-2">
-                        <div class="feature-icon-wrapper">🎧</div>
-                        <h3>Text-to-Speech</h3>
-                        <p>Nghe truyện mọi lúc mọi nơi. Hỗ trợ chạy nền, notification media controls và nhiều giọng đọc
-                            tự nhiên.</p>
-                    </div>
-                    <div class="feature-card reveal reveal-delay-3">
                         <div class="feature-icon-wrapper">💬</div>
                         <h3>Cộng đồng đọc</h3>
                         <p>Chat real-time, đăng bài thảo luận, báo lỗi — tất cả trong một tab Community tích hợp sẵn.
                         </p>
+                    </div>
+                    <div class="feature-card reveal reveal-delay-3">
+                        <div class="feature-icon-wrapper">🔐</div>
+                        <h3>Đăng nhập Google</h3>
+                        <p>Một tài khoản Google là đủ. Bảo mật, nhanh chóng, quản lý vai trò người dùng tự động.</p>
                     </div>
                 </div>
             </div>
