@@ -1,6 +1,6 @@
 {
-  "versionCode": 3,
-  "versionName": "1.2",
+  "versionCode": 4,
+  "versionName": "1.3",
   "updateUrl": "https://infinity-reader.github.io/InfinityReader.apk",
-  "changelog": "- Tối ưu trải nghiệm học tiếng Anh\n- Nâng cấp chế độ Song ngữ AI\n- Tinh chỉnh tính năng Word Wise và Vocab Builder\n- Sửa lỗi và cải thiện hiệu năng"
+  "changelog": "- Tạm thời mở khóa Premium miễn phí hoàn toàn\n- Tối ưu hóa tiêu thụ dữ liệu và chi phí Firebase\n- Cập nhật tên miền website chính thức\n- Tinh chỉnh giao diện và hiệu năng"
 }
