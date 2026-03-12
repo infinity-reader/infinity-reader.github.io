@@ -27,8 +27,10 @@
             --bg: #030712;
             --bg-card: rgba(15, 23, 42, 0.6);
             --bg-card-hover: rgba(30, 41, 59, 0.8);
-            --border: rgba(255, 255, 255, 0.06);
-            --border-hover: rgba(99, 102, 241, 0.4);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.5);
+            --glass-bg: rgba(15, 23, 42, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --text: #f1f5f9;
             --text-muted: #94a3b8;
             --text-dim: #64748b;
@@ -938,6 +940,7 @@
             background: linear-gradient(135deg, transparent, var(--primary), var(--secondary), transparent);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask-composite: exclude;
             opacity: 0;
             transition: opacity 0.5s;
@@ -1189,21 +1192,22 @@
                     </div>
                     <div class="stats-bar reveal reveal-delay-4">
                         <div class="stat-item">
-                            <div class="stat-number" data-target="10">0+</div>
-                            <div class="stat-label">Extensions</div>
+                            <div class="stat-number" data-target="5">0+</div>
+                            <div class="stat-label">AI Models</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="10">0ms</div>
+                            <div class="stat-label">Tốc độ xử lý</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number" data-target="100">0%</div>
                             <div class="stat-label">Miễn phí</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number" data-target="5">0⭐</div>
-                            <div class="stat-label">Đánh giá</div>
-                        </div>
                     </div>
                 </div>
                 <div class="hero-image reveal reveal-delay-3">
-                    <img src="infinity_reader_hero.png" alt="InfinityReader App" loading="eager">
+                    <img src="app_reader.jpg" alt="InfinityReader App" loading="eager"
+                        style="border: 8px solid #1e293b;">
                 </div>
             </div>
         </section>
@@ -1218,16 +1222,16 @@
                 </div>
                 <div class="screenshot-carousel">
                     <div class="screenshot-item reveal reveal-delay-1">
-                        <img src="mockup_library.png" alt="Thư viện sách InfinityReader">
+                        <img src="app_discover.jpg" alt="Thư viện sách InfinityReader">
                     </div>
                     <div class="screenshot-item reveal reveal-delay-2">
-                        <img src="mockup_wordwise.png" alt="Word Wise - Đọc song ngữ">
+                        <img src="app_reader.jpg" alt="Word Wise - Đọc song ngữ">
                     </div>
                     <div class="screenshot-item reveal reveal-delay-3">
-                        <img src="mockup_vocabulary.png" alt="Vocabulary Builder">
+                        <img src="app_summary.jpg" alt="AI Summary - Tóm tắt truyện">
                     </div>
                     <div class="screenshot-item reveal reveal-delay-4">
-                        <img src="mockup_eink.png" alt="Chế độ E-Ink Reader">
+                        <img src="app_vocab.jpg" alt="Ôn tập từ vựng thông minh">
                     </div>
                 </div>
             </div>
@@ -1250,17 +1254,41 @@
                     </div>
                     <div class="step-card reveal reveal-delay-2">
                         <div class="step-number">2</div>
-                        <span class="step-icon">🔌</span>
-                        <h3>Cài Extension</h3>
-                        <p>Vào Cài đặt → Extensions, chọn nguồn truyện yêu thích và nhấn Install.</p>
+                        <span class="step-icon">🔑</span>
+                        <h3>Lấy AI Key Miễn Phí</h3>
+                        <p>Vào Cài đặt → Nhấn "Lấy Key Miễn Phí" để nhận API key từ Groq hoặc Cerebras trong 30 giây.
+                        </p>
                     </div>
                     <div class="step-card reveal reveal-delay-3">
                         <div class="step-number">3</div>
-                        <span class="step-icon">📖</span>
-                        <h3>Đọc thôi!</h3>
-                        <p>Tìm kiếm, thêm vào thư viện và tận hưởng trải nghiệm đọc không giới hạn.</p>
+                        <span class="step-icon">✨</span>
+                        <h3>Đọc & Tóm tắt</h3>
+                        <p>Mở sách, trải nghiệm AI TTS, dịch song ngữ và tóm tắt chương truyện ngay lập tức.</p>
                     </div>
                 </div>
+
+                <!-- API Guide Extra -->
+                <div class="api-guide reveal"
+                    style="margin-top: 60px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 32px; backdrop-filter: blur(10px);">
+                    <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <h4 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--accent);">💡 Hướng dẫn lấy
+                                API Key trong 30 giây</h4>
+                            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0;">Bạn chỉ cần một
+                                tài khoản Google. Truy cập <strong>Groq Cloud</strong> hoặc <strong>Cerebras</strong>,
+                                nhấn "Create API Key" và dán vào App. Không cần thẻ tín dụng, không mất phí.</p>
+                        </div>
+                        <div style="display: flex; gap: 12px;">
+                            <a href="https://console.groq.com/keys" target="_blank"
+                                style="padding: 10px 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; font-size: 0.85rem; color: var(--text); text-decoration: none;">Groq
+                                Cloud ↗</a>
+                            <a href="https://cloud.cerebras.ai/" target="_blank"
+                                style="padding: 10px 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; font-size: 0.85rem; color: var(--text); text-decoration: none;">Cerebras
+                                ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
         </section>
 
@@ -1280,43 +1308,43 @@
                         <span class="sp-badge sp-badge-purple">Core Feature</span>
                         <span class="sp-icon">🧠</span>
                         <h3>AI Word Wise</h3>
-                        <p>Công nghệ AI tự động phân tích và hiển thị nghĩa từ khó <strong>ngay trên dòng chữ</strong>
-                            khi bạn đọc — giống tính năng Word Wise trên Kindle nhưng mạnh hơn gấp bội.</p>
+                        <p>Công nghệ AI tự động giải nghĩa từ khó <strong>ngay trên dòng chữ</strong>. Giống Word Wise
+                            trên Kindle nhưng hỗ trợ tiếng Việt và mạnh mẽ hơn.</p>
                         <ul class="sp-features">
-                            <li>Giải nghĩa Anh → Việt, Anh → Anh tự động</li>
-                            <li>Chọn mức độ hiển thị (dễ / trung bình / khó)</li>
-                            <li>Hỗ trợ bởi AI & từ điển offline</li>
-                            <li>Hoạt động với mọi sách EPUB</li>
+                            <li>Giải nghĩa Anh → Việt tự động</li>
+                            <li>Hỗ trợ Groq (Llama 3), Cerebras (siêu tốc)</li>
+                            <li>Tùy chỉnh mức độ từ khó</li>
+                            <li>Hoạt động Offline với bộ từ điển tích hợp</li>
                         </ul>
                     </div>
-                    <!-- Bilingual Reading -->
+                    <!-- AI Summary -->
                     <div class="superpower-card reveal reveal-delay-2">
                         <div class="sp-glow sp-glow-blue"></div>
-                        <span class="sp-badge sp-badge-blue">Unique</span>
-                        <span class="sp-icon">🌐</span>
-                        <h3>Đọc Song Ngữ</h3>
-                        <p>Hiển thị <strong>song song bản gốc và bản dịch</strong> trên cùng một trang. Đọc tiểu thuyết
-                            tiếng Anh với bản dịch Việt bên cạnh — cách học ngôn ngữ tự nhiên nhất.</p>
+                        <span class="sp-badge sp-badge-blue">New & Powerful</span>
+                        <span class="sp-icon">📝</span>
+                        <h3>AI Summary</h3>
+                        <p>Nắm bắt toàn bộ chương truyện dài hàng nghìn chữ chỉ trong <strong>10 giây</strong>. AI sẽ
+                            tóm tắt các tình tiết chính một cách thông minh.</p>
                         <ul class="sp-features">
-                            <li>Song ngữ Anh - Việt từng đoạn</li>
-                            <li>Dịch tự động bằng AI</li>
-                            <li>Ẩn/hiện bản dịch linh hoạt</li>
-                            <li>Hỗ trợ nhiều cặp ngôn ngữ</li>
+                            <li>Tóm tắt theo phương pháp Map-Reduce</li>
+                            <li>Xử lý cả những chương truyện cực dài</li>
+                            <li>Tùy chỉnh độ dài bản tóm tắt</li>
+                            <li>Nắm bắt nhân vật và bối cảnh nhanh</li>
                         </ul>
                     </div>
                     <!-- Vocabulary Builder -->
                     <div class="superpower-card reveal reveal-delay-3">
                         <div class="sp-glow sp-glow-cyan"></div>
-                        <span class="sp-badge sp-badge-cyan">Super VIP</span>
-                        <span class="sp-icon">📝</span>
-                        <h3>Vocabulary Builder</h3>
-                        <p>Hệ thống <strong>xây dựng vốn từ vựng</strong> hoàn chỉnh. Mỗi từ bạn nhấn tra sẽ được lưu
-                            lại, phân loại, và giúp bạn ôn tập thông minh theo phương pháp Spaced Repetition.</p>
+                        <span class="sp-badge sp-badge-cyan">Learning</span>
+                        <span class="sp-icon">📊</span>
+                        <h3>Vocab Builder</h3>
+                        <p>Hệ thống ôn tập thông minh. Mỗi từ bạn tra sẽ được lưu lại thành Flashcard để học theo phương
+                            pháp <strong>Spaced Repetition</strong>.</p>
                         <ul class="sp-features">
-                            <li>Tự động lưu từ vựng khi tra cứu</li>
-                            <li>Flashcard ôn tập thông minh</li>
-                            <li>Thống kê số từ mới mỗi ngày</li>
-                            <li>Đồng bộ từ vựng lên đám mây</li>
+                            <li>Tự động tạo Flashcard thông minh</li>
+                            <li>Ôn tập với thuật toán ghi nhớ lâu</li>
+                            <li>Thống kê tiến độ học tập hàng ngày</li>
+                            <li>Đồng bộ từ vựng lên Google Drive</li>
                         </ul>
                     </div>
                 </div>
