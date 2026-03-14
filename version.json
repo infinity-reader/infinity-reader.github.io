@@ -1,6 +1,6 @@
 {
-  "versionCode": 6,
-  "versionName": "1.5",
+  "versionCode": 7,
+  "versionName": "1.6",
   "updateUrl": "https://infinity-reader.github.io/InfinityReader.apk",
   "changelog": "- Fix NetworkOnMainThreadException in AI Router\n- Persist AI Smart Explain results in database\n- Optimizing AI request flow and dispatcher management\n- Improved performance and stability"
 }
