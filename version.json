@@ -1,6 +1,6 @@
 {
-  "versionCode": 5,
-  "versionName": "1.4",
+  "versionCode": 6,
+  "versionName": "1.5",
   "updateUrl": "https://infinity-reader.github.io/InfinityReader.apk",
-  "changelog": "- Tạm thời mở khóa Premium miễn phí hoàn toàn\n- Tối ưu hóa tiêu thụ dữ liệu và chi phí Firebase\n- Cập nhật tên miền website chính thức\n- Tinh chỉnh giao diện và hiệu năng"
+  "changelog": "- Fix NetworkOnMainThreadException in AI Router\n- Persist AI Smart Explain results in database\n- Optimizing AI request flow and dispatcher management\n- Improved performance and stability"
 }
