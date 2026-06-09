@@ -1,6 +1,6 @@
 {
-  "versionCode": 7,
-  "versionName": "1.6",
+  "versionCode": 8,
+  "versionName": "1.7",
   "updateUrl": "https://infinity-reader.github.io/InfinityReader.apk",
-  "changelog": "- Fix NetworkOnMainThreadException in AI Router\n- Persist AI Smart Explain results in database\n- Optimizing AI request flow and dispatcher management\n- Improved performance and stability"
+  "changelog": "- Nâng cấp AI Engine: Chuyển sang model suy nghĩ zai-glm-4.7 và gpt-oss-120b\n- Tự động tối ưu hạn ngạch: Ưu tiên GLM, tự động fallback sang GPT-OSS khi hết quota\n- Hỗ trợ reasoning_format parsed để loại bỏ thinking blocks khỏi output\n- Improved AI translation, summarization, and word annotation quality"
 }
